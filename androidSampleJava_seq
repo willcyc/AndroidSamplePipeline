@@ -38,7 +38,7 @@ pipeline{
                     sleep 5
 
                     #安装安卓app
-                    /Users/willcheng/Library/Android/sdk/platform-tools/adbinstall $apk
+                    /Users/willcheng/Library/Android/sdk/platform-tools/adb install $apk
                 '''
             }
         }
