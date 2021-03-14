@@ -6,8 +6,8 @@ pipeline{
     stages{
         stage('安卓程序源码同步') {
             steps {
-                sh 'mkdir -p AndroidSampleApp'
-                dir("AndroidSampleApp"){
+                sh 'mkdir -p jenkins_AndroidSampleApp'
+                dir("jenkins_AndroidSampleApp"){
                     git branch:'master', url:'git@github.com:willcyc/jenkins_AndroidSampleApp.git'
                 }
             }
@@ -17,7 +17,6 @@ pipeline{
             steps {
                 sh '''
                     . ~/.bash_profile
-                    cd AndroidSampleApp
                     cd jenkins_AndroidSampleApp
                     sh gradlew clean assembleDebug
                 '''
@@ -29,7 +28,7 @@ pipeline{
             steps {
                 sh '''
                     . ~/.bash_profile
-                    cd AndroidSampleApp
+                    cd jenkins_AndroidSampleApp
                     apk=app/build/outputs/apk/debug/app-debug.apk
                     {
                         #try: 卸载现有的安卓app
@@ -69,7 +68,7 @@ pipeline{
 
     post {
         success {
-            archiveArtifacts artifacts: 'AndroidSampleApp/app/build/outputs/apk/debug/app-debug.apk'
+            archiveArtifacts artifacts: 'jenkins_AndroidSampleApp/app/build/outputs/apk/debug/app-debug.apk'
         }
         always {
             emailext body: '$DEFAULT_CONTENT', recipientProviders: [[$class: 'RequesterRecipientProvider']], subject: '$DEFAULT_SUBJECT'
