@@ -8,9 +8,9 @@ pipeline{
             parallel {
                 stage('安卓程序源码') {
                     steps {
-                        sh 'mkdir -p AndroidSampleApp'
+                        sh 'mkdir -p jenkins_AndroidSampleApp'
                         dir("AndroidSampleApp"){
-                            git branch:'master', url:'git@github.com:princeqjzh/AndroidSampleApp.git'
+                            git branch:'master', url:'git@github.com:willcyc/AndroidSamplePipeline.git'
                         }
                     }
                 }
@@ -19,7 +19,7 @@ pipeline{
                     steps {
                         sh 'mkdir -p iAppBVT'
                         dir("iAppBVT"){
-                            git branch:'master', url:'git@github.com:princeqjzh/iAppBVT.git'
+                            git branch:'master', url:'git@github.com:willcyc/jenkins_iappBVT.git'
                         }
                     }
                 }
@@ -29,8 +29,7 @@ pipeline{
         stage('安卓编译打包') {
             steps {
                 sh '''
-                    . ~/.bash_profile
-                    cd AndroidSampleApp
+                    cd jenkins_AndroidSampleApp
                     sh gradlew clean assembleDebug
                 '''
             }
@@ -40,7 +39,7 @@ pipeline{
             parallel {
                 stage('发布测试包') {
                     steps {
-                        archiveArtifacts artifacts: 'AndroidSampleApp/app/build/outputs/apk/debug/app-debug.apk'
+                        archiveArtifacts artifacts: 'jenkins_AndroidSampleApp/app/build/outputs/apk/debug/app-debug.apk'
                     }
                 }
 
@@ -49,12 +48,11 @@ pipeline{
                         stage('部署') {
                             steps {
                                 sh '''
-                                    . ~/.bash_profile
                                     cd AndroidSampleApp
                                     apk=app/build/outputs/apk/debug/app-debug.apk
                                     {
                                         #try: 卸载现有的安卓app
-                                        adb uninstall com.appsflyer.androidsampleapp
+                                        /Users/willcheng/Library/Android/sdk/platform-tools/adb uninstall com.appsflyer.androidsampleapp
                                     } || {
                                         #catch
                                         echo 'no com.appsflyer.androidsampleapp package'
@@ -62,7 +60,7 @@ pipeline{
                                     sleep 5
 
                                     #安装安卓app
-                                    adb install $apk
+                                    /Users/willcheng/Library/Android/sdk/platform-tools/adb install $apk
                                 '''
                             }
                         }
@@ -70,10 +68,9 @@ pipeline{
                         stage('自动测试') {
                             steps {
                                 sh '''
-                                    . ~/.bash_profile
 
                                     cd iAppBVT
-                                    mvn clean install
+                                    /Users/willcheng/Downloads/apache-maven-3.6.3/bin/mvn clean install
                                 '''
                             }
                         }
