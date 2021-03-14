@@ -50,7 +50,7 @@ pipeline{
                         stage('部署') {
                             steps {
                                 sh '''
-                                    cd AndroidSampleApp
+                                    cd jenkins_AndroidSampleApp
                                     apk=app/build/outputs/apk/debug/app-debug.apk
                                     {
                                         #try: 卸载现有的安卓app
