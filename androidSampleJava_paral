@@ -30,6 +30,8 @@ pipeline{
             steps {
                 sh '''
                     cd jenkins_AndroidSampleApp
+                    ls
+                    pwd
                     sh gradlew clean assembleDebug
                 '''
             }
