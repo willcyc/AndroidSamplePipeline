@@ -29,7 +29,7 @@ pipeline{
                     cd jenkins_AndroidSampleApp
                     apk=app/build/outputs/apk/debug/app-debug.apk
                     {
-                        #try: 卸载现有的安卓app
+                        #try: 卸载现有的安卓app123
                         /Users/willcheng/Library/Android/sdk/platform-tools/adb uninstall com.appsflyer.androidsampleapp
                     } || {
                         #catch
