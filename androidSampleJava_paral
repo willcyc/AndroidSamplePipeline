@@ -9,7 +9,7 @@ pipeline{
                 stage('安卓程序源码') {
                     steps {
                         sh 'mkdir -p jenkins_AndroidSampleApp'
-                        dir("AndroidSampleApp"){
+                        dir("jenkins_AndroidSampleApp"){
                             git branch:'master', url:'git@github.com:willcyc/jenkins_AndroidSampleApp.git'
                         }
                     }
