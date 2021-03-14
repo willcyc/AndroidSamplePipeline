@@ -16,7 +16,6 @@ pipeline{
         stage('安卓编译打包') {
             steps {
                 sh '''
-                    . ~/.bash_profile
                     cd jenkins_AndroidSampleApp
                     sh gradlew clean assembleDebug
                 '''
@@ -27,7 +26,6 @@ pipeline{
         stage('安卓部署') {
             steps {
                 sh '''
-                    . ~/.bash_profile
                     cd jenkins_AndroidSampleApp
                     apk=app/build/outputs/apk/debug/app-debug.apk
                     {
@@ -57,8 +55,7 @@ pipeline{
         stage('运行自动化测试') {
             steps {
                 sh '''
-                    . ~/.bash_profile
-
+                
                     cd iAppBVT
                     /Users/willcheng/Downloads/apache-maven-3.6.3/bin/mvn clean install
                 '''
