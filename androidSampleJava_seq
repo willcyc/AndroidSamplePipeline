@@ -32,7 +32,7 @@ pipeline{
                     apk=app/build/outputs/apk/debug/app-debug.apk
                     {
                         #try: 卸载现有的安卓app
-                        adb uninstall com.appsflyer.androidsampleapp
+                        /Users/willcheng/Library/Android/sdk/platform-tools/adb uninstall com.appsflyer.androidsampleapp
                     } || {
                         #catch
                         echo 'no com.appsflyer.androidsampleapp package'
@@ -40,7 +40,7 @@ pipeline{
                     sleep 5
 
                     #安装安卓app
-                    adb install $apk
+                    /Users/willcheng/Library/Android/sdk/platform-tools/adbinstall $apk
                 '''
             }
         }
@@ -60,7 +60,7 @@ pipeline{
                     . ~/.bash_profile
 
                     cd iAppBVT
-                    mvn clean install
+                    /Users/willcheng/Downloads/apache-maven-3.6.3/bin/mvn clean install
                 '''
             }
         }
